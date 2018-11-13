@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
 public class StreamTest {
 
     public static void main(String[] args) throws Exception {
-        int count = 1000;
-        int forCount = 10;
-        //Test1(count,forCount);
-        //Test2(count,forCount);
+        int count = 10;
+        int forCount = 1;
+        Test1(count,forCount);
+        Test2(count,forCount);
         TestSum(count,forCount);
     }
 
     public static void Test1(int count,int forCount){
-        System.out.println("ListTest\n");
+        System.out.println("ListAddTest\n");
         List<BankAccountDTO> bankAccountDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             BankAccountDTO bankAccountDTO = new BankAccountDTO();
@@ -38,13 +38,13 @@ public class StreamTest {
             bankAccountDTOList.add(bankAccountDTO);
         }
         long forTimeCount = 0;
-        long forTimeMax = 0;
+
         long forEachTimeCount = 0;
-        long forEachTimeMax = 0;
+
         long streamTimeCount = 0;
-        long streamTimeMax = 0;
+
         long parallelTimeCount = 0;
-        long parallelMax = 0;
+
 
         for (int i = 0; i < forCount; i++) {
             Long fortimeStart = System.nanoTime();
@@ -57,7 +57,6 @@ public class StreamTest {
             Long forTime = (System.nanoTime() - fortimeStart);
             //System.out.println("forTime:" + forTime);
             forTimeCount += forTime;
-            forTimeMax = forTime > forTimeMax ? forTime : forTimeMax;
 
             Long forEachtimeStart = System.nanoTime();
             List<BankAccountDTO> bankAccountDTOforEach = new ArrayList<>();
@@ -69,7 +68,6 @@ public class StreamTest {
             Long forEachTime = System.nanoTime() - forEachtimeStart;
             //System.out.println("forEachTime:" + forEachTime);
             forEachTimeCount += forEachTime;
-            forEachTimeMax = forEachTime > forEachTimeMax ? forEachTime : forEachTimeMax;
 
             Long streamTimeStart = System.nanoTime();
             List<BankAccountDTO> bankAccountDTOStream = bankAccountDTOList.stream()
@@ -78,7 +76,6 @@ public class StreamTest {
             Long streamTime = (System.nanoTime() - streamTimeStart);
             //System.out.println("streamTime:" + streamTime);
             streamTimeCount += streamTime;
-            streamTimeMax = streamTime > streamTimeMax ? streamTime : streamTimeMax;
 
             Long parallelStreamTimeStart = System.nanoTime();
             List<BankAccountDTO> bankAccountDTOparallelStream = bankAccountDTOList.parallelStream()
@@ -87,32 +84,20 @@ public class StreamTest {
             Long parallelStream = (System.nanoTime() - parallelStreamTimeStart);
             //System.out.println("parallelStream:" + parallelStream);
             parallelTimeCount += parallelStream;
-            parallelMax = parallelStream > parallelMax ? parallelStream : parallelMax;
 
             //System.out.println("length:" + bankAccountDTOfor.size() + " " + bankAccountDTOStream.size()+ " " + bankAccountDTOparallelStream.size()+"\n");
         }
         System.out.println(
-            "CountNano for:" + forTimeCount + " forEach:" + forEachTimeCount + " stream:" + streamTimeCount + " parrelStream:"
-                + parallelTimeCount+"\n");
-        System.out.println(
-            "CountMills for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
-                + parallelTimeCount / 1000000+"\n");
-
-        forTimeCount -= forTimeMax;
-        forEachTimeCount -= forEachTimeMax;
-        streamTimeCount -= streamTimeMax;
-        parallelTimeCount -= parallelMax;
-        System.out.println(
-            "for:" + forTimeCount + " forEach:" + forEachTimeCount + " stream:" + streamTimeCount + " parrelStream:"
+            "CountNanos for:" + forTimeCount + " forLam:" + forEachTimeCount + " stream:" + streamTimeCount + " parrelStream:"
                 + parallelTimeCount);
         System.out.println(
-            "CountMillsExpectMax for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
+            "CountMills for:" + forTimeCount / 1000000 + " forLam:" + forEachTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
                 + parallelTimeCount / 1000000+"\n");
     }
 
 
     public static void Test2(int count,int forCount){
-        System.out.println("MapTest");
+        System.out.println("MapAddTest");
         List<BankAccountDTO> bankAccountDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             BankAccountDTO bankAccountDTO = new BankAccountDTO();
@@ -125,13 +110,13 @@ public class StreamTest {
             bankAccountDTOList.add(bankAccountDTO);
         }
         long forTimeCount = 0;
-        long forTimeMax = 0;
+
         long forEachTimeCount = 0;
-        long forEachTimeMax = 0;
+
         long streamTimeCount = 0;
-        long streamTimeMax = 0;
+
         long parallelTimeCount = 0;
-        long parallelMax = 0;
+
 
 
         for (int i = 0; i < forCount; i++) {
@@ -145,7 +130,6 @@ public class StreamTest {
             Long forTime = (System.nanoTime() - fortimeStart);
             //System.out.println("forTime:" + forTime);
             forTimeCount += forTime;
-            forTimeMax = forTime > forTimeMax ? forTime : forEachTimeMax;
 
             Long forEachtimeStart = System.nanoTime();
             Map<String, BankAccountDTO> bankAccountDTOforEach = new HashMap<>();
@@ -157,8 +141,6 @@ public class StreamTest {
             Long forEachTime = System.nanoTime() - forEachtimeStart;
             //System.out.println("forEachTime:" + forEachTime);
             forEachTimeCount += forEachTime;
-            forEachTimeMax = forEachTime > forEachTimeMax ? forEachTime : forEachTimeMax;
-
 
             Long streamTimeStart = System.nanoTime();
             Map<String, BankAccountDTO> bankAccountDTOStream = bankAccountDTOList.stream()
@@ -167,7 +149,6 @@ public class StreamTest {
             Long streamTime = (System.nanoTime() - streamTimeStart);
             //System.out.println("streamTime:" + streamTime);
             streamTimeCount += streamTime;
-            streamTimeMax = streamTime > streamTimeMax ? streamTime : streamTimeMax;
 
             Long parallelStreamTimeStart = System.nanoTime();
             Map<String, BankAccountDTO> bankAccountDTOparallelStream = bankAccountDTOList.parallelStream()
@@ -176,29 +157,16 @@ public class StreamTest {
             Long parallelStream = (System.nanoTime() - parallelStreamTimeStart);
             //System.out.println("parallelStream:" + parallelStream);
             parallelTimeCount += parallelStream;
-            parallelMax = parallelStream > parallelMax ? parallelStream : parallelMax;
 
             //System.out.println("length:" + bankAccountDTOfor.size() + " " + bankAccountDTOStream.size() + " "
             //    + bankAccountDTOparallelStream.size() + "\n");
         }
 
         System.out.println(
-            "for:" + forTimeCount + " forEach:" + forEachTimeCount + " stream:" + streamTimeCount + " parrelStream:"
+            "CountNonos forEach:" + forTimeCount + " forLam:" + forEachTimeCount + " stream:" + streamTimeCount + " parrelStream:"
                 + parallelTimeCount);
         System.out.println(
-            "CountMills for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
-                + parallelTimeCount / 1000000+"\n");
-        forTimeCount -= forTimeMax;
-        forEachTimeCount -= forEachTimeMax;
-        streamTimeCount -= streamTimeMax;
-        parallelTimeCount -= parallelMax;
-
-        System.out.println(
-            "for:" + forTimeCount + " forEach:" + forEachTimeCount + " stream:" + streamTimeCount + " parrelStream:"
-                + parallelTimeCount);
-
-        System.out.println(
-            "CountMillsExpectMax for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
+            "CountMills forEach:" + forTimeCount / 1000000 + " forLam:" + forEachTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
                 + parallelTimeCount / 1000000+"\n");
 
     }
@@ -217,15 +185,10 @@ public class StreamTest {
             bankAccountDTOList.add(bankAccountDTO);
         }
         long forTimeCount = 0;
-        long forTimeMax = 0;
         long forEachTimeCount = 0;
-        long forEachTimeMax = 0;
         long forEachLamTimeCount = 0;
-        long forEachLamTimeMax = 0;
         long streamTimeCount = 0;
-        long streamTimeMax = 0;
         long parallelTimeCount = 0;
-        long parallelMax = 0;
 
 
         for (int i = 0; i < forCount; i++) {
@@ -240,7 +203,6 @@ public class StreamTest {
             Long forTime = (System.nanoTime() - fortimeStart);
             //System.out.println("forTime:" + forTime);
             forTimeCount += forTime;
-            forTimeMax = forTime > forTimeMax ? forTime : forTimeMax;
 
             Long forEachtimeStart = System.nanoTime();
             Wrapper forEachSum = new Wrapper();
@@ -252,7 +214,6 @@ public class StreamTest {
             Long forEachTime = System.nanoTime() - forEachtimeStart;
             //System.out.println("forEachTime:" + forEachTime);
             forEachTimeCount += forEachTime;
-            forEachTimeMax = forEachTime > forEachTimeMax ? forEachTime : forEachTimeMax;
 
             Long forEachLamtimeStart = System.nanoTime();
             Wrapper forEachLamSum = new Wrapper();
@@ -264,7 +225,6 @@ public class StreamTest {
             Long forEachLamTime = System.nanoTime() - forEachLamtimeStart;
             //System.out.println("forEachTime:" + forEachTime);
             forEachLamTimeCount += forEachLamTime;
-            forEachLamTimeMax = forEachLamTime > forEachLamTimeMax ? forEachLamTime : forEachLamTimeMax;
 
             Long streamTimeStart = System.nanoTime();
             Long streamSum = bankAccountDTOList.stream()
@@ -274,7 +234,6 @@ public class StreamTest {
             Long streamTime = (System.nanoTime() - streamTimeStart);
             //System.out.println("streamTime:" + streamTime);
             streamTimeCount += streamTime;
-            streamTimeMax = streamTime > streamTimeMax ? streamTime : streamTimeMax;
 
             Long parallelStreamTimeStart = System.nanoTime();
             Long parallelStreamSum = bankAccountDTOList.parallelStream()
@@ -284,31 +243,18 @@ public class StreamTest {
             Long parallelStream = (System.nanoTime() - parallelStreamTimeStart);
             //System.out.println("parallelStream:" + parallelStream);
             parallelTimeCount += parallelStream;
-            parallelMax = parallelStream > parallelMax ? parallelStream : parallelMax;
 
             //System.out.println("forSum:"+forSum+" forEachSum:"+forEachSum.getValue()+" streamSum:"+streamSum+" parallelSum:"+parallelStreamSum);
             //System.out.println("length:" + bankAccountDTOfor.size() + " " + bankAccountDTOStream.size()+ " " + bankAccountDTOparallelStream.size()+"\n");
         }
         System.out.println();
         System.out.println(
-            "CountNano for:" + forTimeCount + " forEach:" + forEachTimeCount +" forEachLam:"+forEachLamTimeCount +" stream:" + streamTimeCount + " parrelStream:"
+            "CountNanos for:" + forTimeCount + " forEach:" + forEachTimeCount +" forLam:"+forEachLamTimeCount +" stream:" + streamTimeCount + " parrelStream:"
                 + parallelTimeCount);
         System.out.println(
-            "CountMills for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000 + " forEachLam:"
+            "CountMills for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000 + " forLam:"
                 + forEachLamTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000 + " parrelStream:"
                 + parallelTimeCount / 1000000 + "\n");
 
-        forTimeCount -= forTimeMax;
-        forEachTimeCount -= forEachTimeMax;
-        forEachLamTimeCount -= forEachLamTimeMax;
-        streamTimeCount -= streamTimeMax;
-        parallelTimeCount -= parallelMax;
-        System.out.println(
-            "for:" + forTimeCount + " forEach:" + forEachTimeCount + " forEachLam:" + forEachLamTimeCount + " stream:"
-                + streamTimeCount + " parrelStream:" + parallelTimeCount);
-        System.out.println(
-            "CountMillsExpectMax for:" + forTimeCount / 1000000 + " forEach:" + forEachTimeCount / 1000000
-                + " forEachLam:" + forEachLamTimeCount / 1000000 + " stream:" + streamTimeCount / 1000000
-                + " parrelStream:" + parallelTimeCount / 1000000 + "\n");
     }
 }
